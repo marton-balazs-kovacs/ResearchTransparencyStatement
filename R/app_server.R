@@ -5,5 +5,15 @@
 #' @import shiny
 #' @noRd
 app_server <- function(input, output, session) {
-  # Your application server logic
+  # Generate sections
+  section_answers <- mod_sections_server("sections")
+
+  # Intro
+  mod_intro_server("intro")
+
+  # Generate report
+  mod_report_server(
+    "report",
+    answers = reactive({section_answers()})
+  )
 }

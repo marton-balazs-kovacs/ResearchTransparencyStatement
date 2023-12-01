@@ -37,7 +37,7 @@ golem::install_dev_deps()
 
 ## Create Common Files ----
 ## See ?usethis for more information
-usethis::use_mit_license("Golem User") # You can set another license here
+usethis::use_mit_license("Marton Kovacs") # You can set another license here
 usethis::use_readme_rmd(open = FALSE)
 devtools::build_readme()
 # Note that `contact` is required since usethis version 2.1.5
@@ -55,8 +55,8 @@ golem::use_recommended_tests()
 
 ## Favicon ----
 # If you want to change the favicon (default is golem's one)
-golem::use_favicon() # path = "path/to/ico". Can be an online file.
-# golem::remove_favicon() # Uncomment to remove the default favicon
+# golem::use_favicon() # path = "path/to/ico". Can be an online file.
+golem::remove_favicon() # Uncomment to remove the default favicon
 
 ## Add helper functions ----
 golem::use_utils_ui(with_test = TRUE)

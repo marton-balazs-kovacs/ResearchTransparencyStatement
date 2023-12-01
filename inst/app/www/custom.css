@@ -1,0 +1,68 @@
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  flex: 1;
+  background: lightgrey;
+  padding: 10px;
+  border: 1px solid darkgrey;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.tabbable > .nav > li > a {
+  background: none;
+  color: black;
+  border: none;
+}
+
+.tabbable > .nav > li> a[aria-selected="true"] {
+  background: none;
+  color: black;
+  font-weight: bold;
+  border: none;
+}
+
+.tabbable > .nav-tabs > li.active > a,
+.tabbable > .nav-tabs > li.active > a:focus,
+.tabbable > .nav-tabs > li.active > a:hover {
+  background: none;
+  color: black;
+  font-weight: bold;
+  border: none;
+}
+
+.tabbable > .nav-tabs > li > a:hover {
+  background: none;
+  color: black;
+  font-weight: bold;
+  border: none;
+}
+
+.tabbable > .nav-tabs {
+  border-bottom: none;
+}
+
+.main-title {
+  margin-left: 20px;
+}
+
+.section-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.question-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* radiobuttons had a margin I do not know where this styling comes from*/
+.form-group {
+  margin-bottom: 0 !important;
+}

@@ -1,0 +1,84 @@
+{
+  "Sections" : {
+    "General": {
+      "Name": "General",
+      "Label": "Explaining things regarding the whole section",
+      "Questions": [
+        {
+          "Type": "radio",
+          "Label": "Important question",
+          "AnswerType": "YesNo",
+          "Name": "ind_1",
+          "Mandatory": true
+        },
+        {
+          "Type": "textArea",
+          "Label": "",
+          "AnswerType": "Explain",
+          "Name": "ind_1_explain",
+          "Mandatory": false,
+          "Depends": "input['sections-ind_1_button'] % 2 != 0"
+        },
+        {
+          "Type": "radio",
+          "Label": "The next question?",
+          "AnswerType": "YesNo",
+          "Name": "ind_2",
+          "Mandatory": true
+        },
+        {
+          "Type": "textArea",
+          "Label": "",
+          "AnswerType": "Explain",
+          "Name": "ind_2_explain",
+          "Mandatory": false,
+          "Depends": "input['sections-ind_2_button'] % 2 != 0"
+        }
+      ]
+    },
+    "Study": {
+      "Name": "Study",
+      "Label": "Explaining things regarding the study",
+      "Questions": [
+        {
+          "Type": "radio",
+          "Label": "What? Another question?",
+          "AnswerType": "YesNo",
+          "Name": "ind_3",
+          "Mandatory": true
+        },
+        {
+          "Type": "textArea",
+          "Label": "",
+          "AnswerType": "Explain",
+          "Name": "ind_3_explain",
+          "Mandatory": false,
+          "Depends": "input['sections-ind_3_button'] % 2 != 0"
+        },
+        {
+          "Type": "radio",
+          "Label": "Is this the last question?",
+          "AnswerType": "YesNo",
+          "Name": "ind_4",
+          "Mandatory": true
+        },
+        {
+          "Type": "textArea",
+          "Label": "",
+          "AnswerType": "Explain",
+          "Name": "ind_4_explain",
+          "Mandatory": false,
+          "Depends": "input['sections-ind_4_button'] % 2 != 0"
+        }
+      ]
+    }
+  },
+  "Answers": {
+    "YesNo": {"Yes": "Yes", "No": "No", "N/A": "NA"},
+    "YesNa": {"Yes": "Yes", "N/A": "NA"},
+    "Yes": {"Yes": "Yes"},
+    "AlltoNone": {"All": "All", "Partially": "Partially", "None": "None", "N/A": "NA"},
+    "YesExplain": {"Yes": "Yes", "Explain": "Explain"},
+    "Explain": "Provide an explanation here..."
+  }
+}

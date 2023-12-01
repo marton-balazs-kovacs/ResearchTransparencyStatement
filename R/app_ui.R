@@ -10,7 +10,21 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      h1("ResearchTransparencyStatement")
+      h1("ResearchTransparencyStatement", class = "main-title"),
+      div(
+        class = "main",
+        # Inputs
+        div(
+          class = "container",
+          mod_sections_ui("sections")
+        ),
+        # Output
+        div(
+          class = "container",
+          mod_report_ui("report")
+        )
+      ),
+      mod_intro_ui("intro")
     )
   )
 }
