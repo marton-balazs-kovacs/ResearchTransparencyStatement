@@ -61,3 +61,31 @@ drop_nulls <- function(x) {
 #' @noRd
 rv <- function(...) shiny::reactiveValues(...)
 rvtl <- function(...) shiny::reactiveValuesToList(...)
+
+#' Add namespace to conditional elements in json
+dep_ns <- function(conditional, id) {
+  # Assign id to dependency id(s)
+  conditional$DependsOn <- purrr::map(conditional$DependsOn, function(dependency) {
+    dependency$Name <- shiny::NS(id, dependency$Name)
+
+    dependency
+  })
+
+  return(conditional)
+}
+
+#' Generate condition for conditional elements
+dep_create <- function(conditional) {
+  # Extract elements from the conditional
+  condition <- conditional$Condition
+  depends_on <- conditional$DependsOn
+
+  # Replace placeholders in the condition string
+  for (i in seq_along(depends_on)) {
+    placeholder <- paste0("\\", i)
+    replace_value <- depends_on[[i]]$Name
+    condition <- gsub(placeholder, replace_value, condition, fixed = TRUE)
+  }
+
+  return(condition)
+}

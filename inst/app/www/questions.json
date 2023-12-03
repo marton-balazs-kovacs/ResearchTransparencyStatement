@@ -6,33 +6,17 @@
       "Questions": [
         {
           "Type": "radio",
-          "Label": "Important question",
-          "AnswerType": "YesNo",
+          "Label": "Important question?",
+          "AnswerType": "AlltoNone",
           "Name": "ind_1",
           "Mandatory": true
         },
         {
-          "Type": "textArea",
-          "Label": "",
-          "AnswerType": "Explain",
-          "Name": "ind_1_explain",
-          "Mandatory": false,
-          "Depends": "input['sections-ind_1_button'] % 2 != 0"
-        },
-        {
           "Type": "radio",
           "Label": "The next question?",
-          "AnswerType": "YesNo",
+          "AnswerType": "YesNa",
           "Name": "ind_2",
           "Mandatory": true
-        },
-        {
-          "Type": "textArea",
-          "Label": "",
-          "AnswerType": "Explain",
-          "Name": "ind_2_explain",
-          "Mandatory": false,
-          "Depends": "input['sections-ind_2_button'] % 2 != 0"
         }
       ]
     },
@@ -51,9 +35,16 @@
           "Type": "textArea",
           "Label": "",
           "AnswerType": "Explain",
-          "Name": "ind_3_explain",
+          "Name": "explain_ind_3",
           "Mandatory": false,
-          "Depends": "input['sections-ind_3_button'] % 2 != 0"
+          "Conditional": {
+            "Condition": "input['\\1'] == 'Yes'",
+            "DependsOn": [
+              {
+                "Name": "ind_3"
+              }
+            ]
+          }
         },
         {
           "Type": "radio",
@@ -66,9 +57,19 @@
           "Type": "textArea",
           "Label": "",
           "AnswerType": "Explain",
-          "Name": "ind_4_explain",
+          "Name": "explain_ind_4",
           "Mandatory": false,
-          "Depends": "input['sections-ind_4_button'] % 2 != 0"
+          "Conditional": {
+            "Condition": "input['\\1'] == 'Yes' && input['\\2'] == 'Yes'",
+            "DependsOn": [
+              {
+                "Name": "ind_3"
+              },
+              {
+                "Name": "ind_4"
+              }
+            ]
+          }
         }
       ]
     }
@@ -78,7 +79,6 @@
     "YesNa": {"Yes": "Yes", "N/A": "NA"},
     "Yes": {"Yes": "Yes"},
     "AlltoNone": {"All": "All", "Partially": "Partially", "None": "None", "N/A": "NA"},
-    "YesExplain": {"Yes": "Yes", "Explain": "Explain"},
     "Explain": "Provide an explanation here..."
   }
 }

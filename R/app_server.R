@@ -6,7 +6,7 @@
 #' @noRd
 app_server <- function(input, output, session) {
   # Generate sections
-  section_answers <- mod_sections_server("sections")
+  section_data <- mod_sections_server("sections")
 
   # Intro
   mod_intro_server("intro")
@@ -14,6 +14,7 @@ app_server <- function(input, output, session) {
   # Generate report
   mod_report_server(
     "report",
-    answers = reactive({section_answers()})
+    answers = reactive({section_data$answers()}),
+    sections = reactive({section_data$sectionList()})
   )
 }

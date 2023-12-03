@@ -33,14 +33,14 @@ renderSection <- function(section,
 customField <- function(ind, id = NULL) {
   # If the input is not a question, it is assumed that it is some guidance text in between the items
   if (ind$Type == "text") {
-    # The guidance text can itself be conditional
-    if (is.null(ind$Depends)) {
+    # The guidance text itself can be conditional
+    if (is.null(ind$Conditional)) {
       strong(ind$Label)
     } else{
       # Add module id
-      depends <- dep_ns(ind$Depends, id = id)
+      ind$Conditional <- dep_ns(ind$Conditional, id = id)
       # Render guidance text conditionally
-      conditionalPanel(condition = depends, strong(ind$Label))
+      conditionalPanel(condition = dep_create(ind$Conditional), strong(ind$Label))
     }
     # Create question
   } else {
@@ -50,13 +50,16 @@ customField <- function(ind, id = NULL) {
 
 customButton <- function(ind, id = NULL) {
   # Always display unconditional items
-  if (is.null(ind$Depends)) {
-    ind$Depends <- "true"
+  if (is.null(ind$Conditional)) {
+    condition <- "true"
+  } else {
+    ind$Conditional <- dep_ns(ind$Conditional, id = id)
+    condition <- dep_create(ind$Conditional)
   }
 
   # Render question conditionally
   conditionalPanel(
-    condition = ind$Depends,
+    condition = condition,
     div(
       class = "question-container",
       # Question label
@@ -69,13 +72,13 @@ customButton <- function(ind, id = NULL) {
       # This is a makeshift solution should be replaced by nested dependency structure (by rows and button element e.g.) if app gets picked up
       # in that case json-schema should be provided for the app so it is more generalizable for other tasks in the future
       # Also sections should be optional as well
-      if (ind$Mandatory) {
-        actionButton(
-          inputId = paste0(id, "-", ind$Name, "_button"),
-          label = "",
-          icon = icon("far fa-pen-to-square", lib = "font-awesome", class = "dependency-icon")
-        )
-      },
+      # if (ind$Mandatory) {
+      #   actionButton(
+      #     inputId = paste0(id, "-", ind$Name, "_button"),
+      #     label = "",
+      #     icon = icon("far fa-pen-to-square", lib = "font-awesome", class = "dependency-icon")
+      #   )
+      # },
       # Icon to show whether the question is answered
       # Only for mandatory questions
 

@@ -51,8 +51,13 @@ compose_questions <- function(question, answers = answers){
 
   # Format answers to questions
   if( !(question$AnswerType == "Explain") ){
-    # Make answer bold if it is not a comment
-    answer <- stringr::str_glue("<b>{answers[[question$Name]]}</b>")
+    # Placeholder of no responses provided
+    if ( length(answers[[question$Name]]) == 0 ) {
+      answer <- "<b>No response provided.</b>"
+    } else {
+      # Make answer bold if it is not a comment
+      answer <- stringr::str_glue("<b>{answers[[question$Name]]}</b>")
+    }
   } else if( question$AnswerType == "Explain" ){
     # Add no comment otherwise return formatted comment
     answer <- ifelse(answers[[question$Name]] == "", "No comments.", answers[[question$Name]])

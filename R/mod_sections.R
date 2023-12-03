@@ -10,14 +10,9 @@
 mod_sections_ui <- function(id){
   ns <- NS(id)
 
-  sectionsList <- ResearchTransparencyStatement:::questions$sectionsList
-
-  sectionsHTML <- lapply(sectionsList, renderSection, id = id)
-  names(sectionsHTML) <- NULL
-  sectionsHTML <- do.call(tabsetPanel, c(sectionsHTML, id = NS(id, "sections")))
-
   tagList(
-    sectionsHTML
+    uiOutput(ns("input_form")),
+    actionButton(ns("add_section"), "Add a new study")
   )
 }
 
@@ -28,12 +23,40 @@ mod_sections_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
-    sectionsList <- ResearchTransparencyStatement:::questions$sectionsList
+    # Get questions
+    sectionsList <- reactiveVal(ResearchTransparencyStatement:::questions$sectionsList)
+
+    # Generate input form
+    sectionsHTML <- reactive({
+      sectionsHTML <- lapply(sectionsList(), renderSection, id = id)
+      names(sectionsHTML) <- NULL
+      do.call(tabsetPanel, c(sectionsHTML, id = NS(id, "sections")))
+    })
+
+    # Render input form
+    # This solution is a bit slower but allows for dynamic UI update
+    output$input_form <- renderUI({sectionsHTML()})
+
+    # Add new study section
+    observeEvent(input$add_section, {
+      # Get current list
+      current_list <- sectionsList()
+      # Calculate new tab index
+      new_element_index <- sum(grepl("Study", names(sectionsList()))) + 1
+      # Get the number of sections
+      new_element_name <- paste0("Study", new_element_index)
+      # Change ids on new level
+      new_element <- duplicate_section(sectionsList()$Study, name = new_element_name, suffix = new_element_index)
+      # Add new level
+      current_list[[new_element_name]] <- new_element
+      # Add new study section
+      sectionsList(current_list)
+    })
 
     # changing icons when item is answered
     # change id to fit module
     observe({
-      items <- getItemList(sectionsList, all = FALSE) # loop only on items
+      items <- getItemList(sectionsList(), all = FALSE) # loop only on items
 
       for(item in items){
         session$sendCustomMessage(
@@ -54,7 +77,7 @@ mod_sections_server <- function(id){
     })
 
     # return answers
-    return(answers)
+    return(list(answers = answers, sectionList = sectionsList))
   })
 }
 

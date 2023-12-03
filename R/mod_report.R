@@ -10,15 +10,15 @@
 mod_report_ui <- function(id){
   ns <- NS(id)
   tagList(
-    uiOutput(ns("responses")),
-    textOutput(ns("test"))
+    uiOutput(ns("responses"))
+    # textOutput(ns("test"))
   )
 }
 
 #' report Server Functions
 #'
 #' @noRd
-mod_report_server <- function(id, answers){
+mod_report_server <- function(id, answers, sections){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
 
@@ -26,7 +26,7 @@ mod_report_server <- function(id, answers){
     whichComplete <- reactive({
       isComplete(
         answers = answers(),
-        sectionsList = ResearchTransparencyStatement:::questions$sectionsList
+        sectionsList = sections()
       )
     })
 
@@ -46,14 +46,12 @@ mod_report_server <- function(id, answers){
     })
 
     output$responses <- renderUI({
-      # paste(names(answers()), answers(), sep = ": ", collapse = "\n")
-      compose_report(answers = answers(), sectionsList = ResearchTransparencyStatement:::questions$sectionsList, answerList = ResearchTransparencyStatement:::questions$answerList)
+      compose_report(answers = answers(), sectionsList = sections(), answerList = ResearchTransparencyStatement:::questions$answerList)
       })
 
-    output$test <- renderText({
-      # paste(names(answers()), answers(), sep = ": ", collapse = "\n")
-      compose_report(answers = answers(), sectionsList = ResearchTransparencyStatement:::questions$sectionsList, answerList = ResearchTransparencyStatement:::questions$answerList)
-    })
+    # output$test <- renderText({
+    #   compose_report(answers = answers(), sectionsList = sections(), answerList = ResearchTransparencyStatement:::questions$answerList)
+    # })
 
   })
 }
